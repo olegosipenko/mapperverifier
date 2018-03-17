@@ -15,12 +15,22 @@
  */
 package mapperverifier
 
+import java.lang.reflect.Constructor
+import java.lang.reflect.Method
+
 class MapperVerifier<T> private constructor(private val type: Class<T>) {
+
+    private lateinit var mappingMethod: Method
 
     companion object {
         fun <T> forClass(type: Class<T>): MapperVerifier<T> {
             return MapperVerifier(type)
         }
+    }
+
+    fun forMethod(method: Method): MapperVerifier<T> {
+        mappingMethod = method
+        return this
     }
 
     fun verify() {
@@ -32,18 +42,53 @@ class MapperVerifier<T> private constructor(private val type: Class<T>) {
     }
 
     private fun performVerification() {
-        val methods = type.methods.filter { it.parameterCount == 1 &&
-                it.declaringClass != Object::class.java && it.returnType != Void.TYPE}
-        if (methods.size > 1) {
-            throw IllegalArgumentException("Mapper class should contain only one public method with type of class " +
-                    "from and with return type of out class")
-        }
-        val mappingMethod = methods[0]
+        extractMappingMethod()
+
+        val mapper = type.newInstance()
+
         val outClass = mappingMethod.parameterTypes[0]
+        val outObject = constructOutObject(outClass)
+        val outGetters = extractGetters(outClass)
+
+        val inObject = mappingMethod.invoke(mapper, outObject)
         val inClass = mappingMethod.returnType
-        val outSetters = outClass.methods.filter { it.name.startsWith("set") }
+        val inGetters = extractGetters(inClass)
+
+        assertFields(outGetters, inGetters, outObject, inObject)
+    }
+
+    private fun extractMappingMethod() {
+        if (!::mappingMethod.isInitialized) {
+            val methods = type.methods.filter {
+                it.parameterCount == 1 &&
+                        it.declaringClass != Object::class.java && it.returnType != Void.TYPE
+            }
+            validateExtractedMethods(methods)
+            mappingMethod = methods[0]
+        }
+    }
+
+    private fun validateExtractedMethods(methods: List<Method>) {
+        if (methods.size > 1) {
+            throwMissingMethodException()
+        }
+    }
+
+    private fun throwMissingMethodException() {
+        throw IllegalArgumentException("Mapper class should contain only one public method with type of class " +
+                "from and with return type of out class")
+    }
+
+    private fun constructOutObject(outClass: Class<*>): Any {
         val constructor = outClass.constructors[0]
+
+        val constructorArguments = initConstructorArguments(constructor)
+        return constructor.newInstance(constructorArguments)
+    }
+
+    private fun initConstructorArguments(constructor: Constructor<*>): Array<Any> {
         val constructorArguments = Array<Any>(constructor.parameterCount, { it + 1 })
+
         for (index in constructor.parameters.indices) {
             val value = when (constructor.parameters[index].type) {
                 Byte::class.java -> Byte.MIN_VALUE
@@ -59,12 +104,14 @@ class MapperVerifier<T> private constructor(private val type: Class<T>) {
             }
             constructorArguments.set(index, value)
         }
-        val outObject = constructor.newInstance(constructorArguments)
-        val mapper = type.newInstance()
-        val inObject = mappingMethod.invoke(mapper, outObject)
+        return constructorArguments
+    }
 
-        val outGetters = outClass.methods.filter { (it.name.startsWith("get") || it.name.startsWith("is")) && it.returnType != Void.TYPE }
-        val inGetters = inClass.methods.filter { (it.name.startsWith("get") || it.name.startsWith("is")) && it.returnType != Void.TYPE }
+    private fun extractGetters(clazz: Class<*>): List<Method> {
+        return clazz.methods.filter { (it.name.startsWith("get") || it.name.startsWith("is")) && it.returnType != Void.TYPE }
+    }
+
+    private fun assertFields(outGetters: List<Method>, inGetters: List<Method>, outObject: Any, inObject: Any) {
         if (outGetters.size != inGetters.size) {
             Assert.fail("number of getters should be equal")
         }
