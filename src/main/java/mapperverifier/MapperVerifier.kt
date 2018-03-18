@@ -17,6 +17,8 @@ package mapperverifier
 
 import java.lang.reflect.Constructor
 import java.lang.reflect.Method
+import java.util.*
+
 
 class MapperVerifier<T> private constructor(private val type: Class<T>) {
 
@@ -90,21 +92,34 @@ class MapperVerifier<T> private constructor(private val type: Class<T>) {
         val constructorArguments = Array<Any>(constructor.parameterCount, { it + 1 })
 
         for (index in constructor.parameters.indices) {
+            val random = Random()
             val value = when (constructor.parameters[index].type) {
-                Byte::class.java -> Byte.MIN_VALUE
-                Short::class.java -> Short.MIN_VALUE
-                Int::class.java -> Int.MIN_VALUE
-                Long::class.java -> Long.MIN_VALUE
-                Float::class.java -> Float.MIN_VALUE
-                Double::class.java -> Double.MIN_VALUE
-                Boolean::class.java -> true
-                Char::class.java -> 'a'
-                String::class.java -> "correct"
+                Byte::class.java -> random.nextInt(Byte.MAX_VALUE.toInt()).toByte()
+                Short::class.java -> random.nextInt(Short.MAX_VALUE.toInt()).toShort()
+                Int::class.java -> random.nextInt()
+                Long::class.java -> random.nextLong()
+                Float::class.java -> random.nextFloat()
+                Double::class.java -> random.nextDouble()
+                Boolean::class.java -> random.nextBoolean()
+                Char::class.java -> random.nextInt(Byte.MAX_VALUE.toInt()).toChar()
+                String::class.java -> getRandomString(random);
                 else -> throw UnsupportedOperationException("not implemented yet")
             }
-            constructorArguments.set(index, value)
+            constructorArguments[index] = value
         }
         return constructorArguments
+    }
+
+    private fun getRandomString(random: Random): String {
+        val leftLimit = 97;
+        val rightLimit = 122;
+        val stringLength = random.nextInt(Byte.MAX_VALUE.toInt())
+        val sb = StringBuilder(stringLength)
+        for (i in 0 until stringLength) {
+            val randomLimitedInt = leftLimit + (random.nextFloat() * (rightLimit - leftLimit + 1)).toInt()
+            sb.append(randomLimitedInt.toChar())
+        }
+        return sb.toString()
     }
 
     private fun extractGetters(clazz: Class<*>): List<Method> {
