@@ -1,4 +1,5 @@
 [![Apache License 2.0](https://img.shields.io/:license-Apache%20License%202.0-blue.svg?style=plastic)](https://github.com/olegosipenko/mapperverifier/blob/master/LICENSE.md)
+[![Open issues](https://img.shields.io/github/issues/olegosipenko/mapperverifier.svg?style=plastic)](https://github.com/olegosipenko/mapperverifier/issues)
 
 **MapperVerifier** intended to use in unit tests to validate correctness of model class mappers
 
