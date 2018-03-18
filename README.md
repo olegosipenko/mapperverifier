@@ -31,3 +31,4 @@ Current Limitations
 ```
 * There's no support for mappers taking two or more arguments to produce output
 * Number of getters in input and output classes should match and also should match their ordering
+* For now fields of only primitive types and Strings supported
