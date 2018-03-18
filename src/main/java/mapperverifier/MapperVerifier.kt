@@ -31,6 +31,7 @@ class MapperVerifier<T> private constructor(private val type: Class<T>) {
         const val SETTER_PREFIX = "set"
         const val BUILD_METHOD = "build"
 
+        @JvmStatic
         fun <T> forClass(type: Class<T>): MapperVerifier<T> {
             return MapperVerifier(type)
         }
