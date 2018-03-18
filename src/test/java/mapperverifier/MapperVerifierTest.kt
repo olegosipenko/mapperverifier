@@ -6,56 +6,62 @@ class MapperVerifierTest {
 
     @Test(expected = AssertionException::class)
     fun testBrokenByteMapper() {
-        val bbMapperVerifier = MapperVerifier.forClass(BrokenByteMapper::class.java)
-        bbMapperVerifier.verify()
+        val bByteMapperVerifier = MapperVerifier.forClass(BrokenByteMapper::class.java)
+        bByteMapperVerifier.verify()
     }
 
     @Test(expected = AssertionException::class)
     fun testBrokenShortMapper() {
-        val bbMapperVerifier = MapperVerifier.forClass(BrokenShortMapper::class.java)
-        bbMapperVerifier.verify()
+        val bShortMapperVerifier = MapperVerifier.forClass(BrokenShortMapper::class.java)
+        bShortMapperVerifier.verify()
     }
 
     @Test(expected = AssertionException::class)
     fun testBrokenIntMapper() {
-        val bbMapperVerifier = MapperVerifier.forClass(BrokenIntMapper::class.java)
-        bbMapperVerifier.verify()
+        val bIntMapperVerifier = MapperVerifier.forClass(BrokenIntMapper::class.java)
+        bIntMapperVerifier.verify()
     }
 
     @Test(expected = AssertionException::class)
     fun testBrokenLongMapper() {
-        val bbMapperVerifier = MapperVerifier.forClass(BrokenLongMapper::class.java)
-        bbMapperVerifier.verify()
+        val bLongMapperVerifier = MapperVerifier.forClass(BrokenLongMapper::class.java)
+        bLongMapperVerifier.verify()
     }
 
     @Test(expected = AssertionException::class)
     fun testBrokenFloatMapper() {
-        val bbMapperVerifier = MapperVerifier.forClass(BrokenFloatMapper::class.java)
-        bbMapperVerifier.verify()
+        val bFloatMapperVerifier = MapperVerifier.forClass(BrokenFloatMapper::class.java)
+        bFloatMapperVerifier.verify()
     }
 
     @Test(expected = AssertionException::class)
     fun testBrokenDoubleMapper() {
-        val bbMapperVerifier = MapperVerifier.forClass(BrokenDoubleMapper::class.java)
-        bbMapperVerifier.verify()
+        val bDoubleMapperVerifier = MapperVerifier.forClass(BrokenDoubleMapper::class.java)
+        bDoubleMapperVerifier.verify()
     }
 
     @Test(expected = AssertionException::class)
     fun testBrokenBooleanMapper() {
-        val bbMapperVerifier = MapperVerifier.forClass(BrokenBooleanMapper::class.java)
-        bbMapperVerifier.verify()
+        val bBoolMapperVerifier = MapperVerifier.forClass(BrokenBooleanMapper::class.java)
+        bBoolMapperVerifier.verify()
     }
 
     @Test(expected = AssertionException::class)
     fun testBrokenCharMapper() {
-        val bbMapperVerifier = MapperVerifier.forClass(BrokenCharMapper::class.java)
-        bbMapperVerifier.verify()
+        val bCharMapperVerifier = MapperVerifier.forClass(BrokenCharMapper::class.java)
+        bCharMapperVerifier.verify()
     }
 
     @Test(expected = AssertionException::class)
     fun testBrokenStringMapper() {
-        val bbMapperVerifier = MapperVerifier.forClass(BrokenStringMapper::class.java)
-        bbMapperVerifier.verify()
+        val bStringMapperVerifier = MapperVerifier.forClass(BrokenStringMapper::class.java)
+        bStringMapperVerifier.verify()
+    }
+
+    @Test
+    fun testBuilderClass() {
+        val javaBuilderMapper = MapperVerifier.forClass(JavaBuilderMapper::class.java)
+        javaBuilderMapper.verify()
     }
 
     class BrokenByteMapper {
@@ -217,6 +223,21 @@ class MapperVerifierTest {
                     modelRed.charValue,
                     "wrong"
             )
+        }
+    }
+
+    class JavaBuilderMapper {
+        fun apply(modelRed: JavaBuilderClassRed): ModelBlack {
+            return ModelBlack(
+                    modelRed.byteValue,
+                    modelRed.shortValue,
+                    modelRed.intValue,
+                    modelRed.longValue,
+                    modelRed.floatValue,
+                    modelRed.doubleValue,
+                    modelRed.booleanValue,
+                    modelRed.charValue,
+                    modelRed.stringValue)
         }
     }
 
