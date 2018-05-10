@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.org/olegosipenko/mapperverifier.svg?branch=master)](https://travis-ci.org/olegosipenko/mapperverifier)
+[![codecov](https://codecov.io/gh/olegosipenko/mapperverifier/branch/master/graph/badge.svg)](https://codecov.io/gh/olegosipenko/mapperverifier)
 <a href="http://www.methodscount.com/?lib=com.github.olegosipenko%3Amapperverifier%3Av0.0.1-SNAPSHOT"><img src="https://img.shields.io/badge/Methods count-636-e91e63.svg"/></a>
 <a href="http://www.methodscount.com/?lib=com.github.olegosipenko%3Amapperverifier%3Av0.0.1-SNAPSHOT"><img src="https://img.shields.io/badge/Size-80 KB-e91e63.svg"/></a>
 [![](https://jitpack.io/v/olegosipenko/mapperverifier.svg)](https://jitpack.io/#olegosipenko/mapperverifier)
