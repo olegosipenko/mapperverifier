@@ -1,6 +1,6 @@
 [![Build Status](https://travis-ci.org/olegosipenko/mapperverifier.svg?branch=master)](https://travis-ci.org/olegosipenko/mapperverifier)
-<a href="http://www.methodscount.com/?lib=com.github.olegosipenko%3Amapperverifier%3A1.0.0-BETA-2"><img src="https://img.shields.io/badge/Methods count-636-e91e63.svg"/></a>
-<a href="http://www.methodscount.com/?lib=com.github.olegosipenko%3Amapperverifier%3A1.0.0-BETA-2"><img src="https://img.shields.io/badge/Size-80 KB-e91e63.svg"/></a>
+<a href="http://www.methodscount.com/?lib=com.github.olegosipenko%3Amapperverifier%3A0.0.1-SNAPSHOT"><img src="https://img.shields.io/badge/Methods count-636-e91e63.svg"/></a>
+<a href="http://www.methodscount.com/?lib=com.github.olegosipenko%3Amapperverifier%3A0.0.1-SNAPSHOT"><img src="https://img.shields.io/badge/Size-80 KB-e91e63.svg"/></a>
 [![](https://jitpack.io/v/olegosipenko/mapperverifier.svg)](https://jitpack.io/#olegosipenko/mapperverifier)
 [![Apache License 2.0](https://img.shields.io/:license-Apache%20License%202.0-blue.svg?style=plastic)](https://github.com/olegosipenko/mapperverifier/blob/master/LICENSE.md)
 [![Open issues](https://img.shields.io/github/issues/olegosipenko/mapperverifier.svg?style=plastic)](https://github.com/olegosipenko/mapperverifier/issues)
