@@ -2,7 +2,7 @@ group 'com.github.olegosipenko:mapperverifier'
 version '0.0.1-SNAPSHOT'
 
 buildscript {
-    ext.kotlin_version = '1.2.30'
+    ext.kotlin_version = '1.2.41'
     ext.dokka_version = '0.9.14'
 
     dependencies {
@@ -19,6 +19,7 @@ buildscript {
 
 apply plugin: 'kotlin'
 apply plugin: 'org.jetbrains.dokka'
+apply plugin: 'maven-publish'
 
 sourceCompatibility = 1.8
 
