@@ -3,7 +3,7 @@ version '0.0.1-SNAPSHOT'
 
 buildscript {
     ext.kotlin_version = '1.2.41'
-    ext.dokka_version = '0.9.14'
+    ext.dokka_version = '0.9.16'
 
     dependencies {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
@@ -20,6 +20,7 @@ buildscript {
 apply plugin: 'kotlin'
 apply plugin: 'org.jetbrains.dokka'
 apply plugin: 'maven-publish'
+apply plugin: 'jacoco'
 
 sourceCompatibility = 1.8
 
@@ -42,5 +43,10 @@ compileTestKotlin {
 
 dokka {
     outputFormat = 'html'
-    outputDirectory = "docs/javadoc"
+    outputDirectory = "$buildDir/javadoc"
+}
+
+jacoco {
+    toolVersion = "0.8.1"
+    reportsDir = file("$buildDir/customJacocoReportDir")
 }
