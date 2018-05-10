@@ -48,5 +48,5 @@ dokka {
 
 jacoco {
     toolVersion = "0.8.1"
-    reportsDir = file("$buildDir/customJacocoReportDir")
+    reportsDir = file("$buildDir/reports")
 }
