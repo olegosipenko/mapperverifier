@@ -13,10 +13,10 @@ Have you ever written a mapper class from one entity to another with dozen or tw
 **MapperVerifier** helps you. Testing mapper could be as simple as:
 
 ```java
-   @Test
-   void testMapper() {
+    @Test
+    void testMapper() {
        MapperVerifier.forClass(MySuperMapper.class).verify()
-   }
+    }
 ```
 
 And **MapperVerifier** does everything for you.
@@ -24,18 +24,32 @@ And **MapperVerifier** does everything for you.
 Installations
 ---
 
+Add to top-level `build.gradle`:
+```groovy
+    allProjects {
+        repositories {
+            maven { url 'https://jitpack.io' }
+        }
+    }
+```
+
+And your module `build.gradle`:
+```groovy
+    testImplementation "com.github.olegosipenko:mapperverifier:master-SNAPSHOT"
+```
+
 Current Limitations
 ---
 * Mapper class should contain one public mapping method with one argument and return type different from Void.
 * If you have more public methods in your mapper class with one argument and return type different from Void, you can implicitly specify mapping method using method `forMethod(Method method)`:
 
 ```java
-   @Test
-   void testSpecificMethodMapper() {
-       MapperVerifier.forClass(MySuperMapper.class)
-           .forMethod(MySuperMapper.class.getMethod("mySuperMappingMethod"))
-           .verify()
-   }
+    @Test
+    void testSpecificMethodMapper() {
+        MapperVerifier.forClass(MySuperMapper.class)
+            .forMethod(MySuperMapper.class.getMethod("mySuperMappingMethod"))
+            .verify()
+    }
 ```
 * There's no support for mappers taking two or more arguments to produce output
 * Number of getters in input and output classes should match and also should match their ordering
